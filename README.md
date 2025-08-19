@@ -149,7 +149,7 @@ DELETE /devices/{id}
   "type": "SENSOR",
   "serialNumber": "SN-1001",
   "createdAt": "2025-08-19T10:15:30",
-  "userId": "b02c8c16-...."      // opsiyonel
+  "userId": "b02c8c16-...."    
 }
 🔒 Çoklu Kullanıcı Güvenliği (Owner Scoping)
 
@@ -198,7 +198,7 @@ curl -s -X POST http://localhost:8080/auth/login \
   -H "Content-Type: application/json" \
   -d '{"email":"demo@roltek.com","password":"Demo1234!"}'
 
-# TOKEN=<çıkan JWT'yi kopyala>
+TOKEN=<çıkan JWT'yi kopyala>
 
 # Liste
 curl -s "http://localhost:8080/devices?page=0&size=10&sort=createdAt,desc" \
@@ -223,7 +223,7 @@ TOKEN_1=$(curl -s -X POST http://localhost:8080/auth/login \
 # Kullanıcı-2'ye ait bir device id'sini okumaya çalış (örnek)
 curl -i http://localhost:8080/devices/<baskasinin-id'si> \
   -H "Authorization: Bearer $TOKEN_1"
-# => HTTP/1.1 403
+
 
 
 
