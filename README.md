@@ -151,7 +151,20 @@ DELETE /devices/{id}
   "createdAt": "2025-08-19T10:15:30",
   "userId": "b02c8c16-...."      // opsiyonel
 }
+🔒 Çoklu Kullanıcı Güvenliği (Owner Scoping)
 
+Tüm /devices uçları aktif kullanıcının cihazlarıyla sınırlıdır.
+Backend, JWT’den kullanıcını alır ve Device.owner alanına göre veri izolasyonu uygular.
+
+Başka bir kullanıcıya ait kaynağa erişmeye çalışırsan:
+
+GET /devices/{id} → 403 Forbidden
+
+PUT /devices/{id} → 403 Forbidden
+
+DELETE /devices/{id} → 403 Forbidden
+
+Tokensız/geçersiz token durumunda → 401 Unauthorized
 
 Kısıtlar & Hatalar
 
@@ -201,3 +214,32 @@ curl -s -X POST http://localhost:8080/devices \
   -H "Authorization: Bearer $TOKEN" -H "Content-Type: application/json" \
   -d '{"name":"Other","type":"SENSOR","serialNumber":"SN-1001"}'
 # => 409
+
+
+TOKEN_1=$(curl -s -X POST http://localhost:8080/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"demo@roltek.com","password":"Demo1234!"}' | jq -r .accessToken)
+
+# Kullanıcı-2'ye ait bir device id'sini okumaya çalış (örnek)
+curl -i http://localhost:8080/devices/<baskasinin-id'si> \
+  -H "Authorization: Bearer $TOKEN_1"
+# => HTTP/1.1 403
+
+
+
+
+
+# Uygulama İçi Görüntüler
+<img width="1394" height="783" alt="Ekran görüntüsü 2025-08-19 192801" src="https://github.com/user-attachments/assets/817525f7-919a-46c6-b421-1b2260e86adf" />
+
+<img width="1384" height="841" alt="Ekran görüntüsü 2025-08-19 192757" src="https://github.com/user-attachments/assets/1c2c7ad9-7caf-4202-920a-16a008ba1630" />
+
+<img width="1452" height="722" alt="Ekran görüntüsü 2025-08-19 192750" src="https://github.com/user-attachments/assets/6ff41cb1-9cd2-4f0d-b3cb-922dfaa1d5a9" />
+
+<img width="1525" height="755" alt="Ekran görüntüsü 2025-08-19 192744" src="https://github.com/user-attachments/assets/e1eb58a5-5b72-45b7-9e41-2e5825ca0b77" />
+
+<img width="1391" height="830" alt="Ekran görüntüsü 2025-08-19 192625" src="https://github.com/user-attachments/assets/03c8eac6-c512-4b8b-a712-f0b1c1c98046" />
+
+
+
+
