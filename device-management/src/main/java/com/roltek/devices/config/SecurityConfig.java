@@ -14,7 +14,7 @@ public class SecurityConfig {
     private final JwtAuthFilter jwtAuthFilter;
     public SecurityConfig(JwtAuthFilter f){ this.jwtAuthFilter = f; }
 
-    // SecurityConfig.java (güncelle)
+    
     @Bean
     SecurityFilterChain security(HttpSecurity http) throws Exception {
         http
@@ -33,7 +33,7 @@ public class SecurityConfig {
         return http.build();
     }
 
-    // CORS bean:
+  
     @Bean
     public org.springframework.web.cors.CorsConfigurationSource corsConfigurationSource(
             @org.springframework.beans.factory.annotation.Value("${app.cors.allowed-origins:http://localhost:3000}") String origins) {
@@ -47,10 +47,11 @@ public class SecurityConfig {
     }
 
 
-    // SecurityConfig.java
+ 
     @Bean
     public org.springframework.security.crypto.password.PasswordEncoder passwordEncoder() {
         return new org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder();
     }
 
 }
+
